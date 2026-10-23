@@ -193,17 +193,17 @@ class RateLimitIETFDraft(BaseResponseHeadersProvider):
     ) -> dict[str, str]:
         """Returns the formatted response headers."""
         # Example headers:
-        # `RateLimit-Policy: 30;w=60;name="ip", 100;w=3600;name="user"`
-        # `RateLimit: "problemPolicy";r=0;t=10`
+        # `RateLimit-Policy: "ip";q=30;w=60, "user";q=100;w=3600`
+        # `RateLimit: "ip";r=0;t=10`
         throttles = (
             (endpoint.metadata.throttling or ()) if report_all else [throttle]
         )
         return {
             'RateLimit-Policy': ', '.join(
                 (
-                    f'{throttle.max_requests};'  # noqa: WPS237
-                    f'w={throttle.duration_in_seconds};'
-                    f'name="{throttle.cache_key.name}"'
+                    f'"{throttle.cache_key.name}";'  # noqa: WPS237
+                    f'q={throttle.max_requests};'
+                    f'w={throttle.duration_in_seconds}'
                 )
                 # However, it can't be `None`, since we are here:
                 for throttle in throttles

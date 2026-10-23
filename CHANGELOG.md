@@ -88,6 +88,10 @@ ask your coding agent to use `$dmr-upgrade` to upgrade a project.
 - Fixed `SyncRedis` and `AsyncRedis` with `SimpleRate` reporting
   a negative reset (`X-RateLimit-Reset: -2`) for a throttle with
   no requests in the current window, other backends report the full window
+- Fixed `RateLimitIETFDraft` sending `RateLimit-Policy` items
+  in the format of an older draft, `1;w=60;name="RemoteAddr"`.
+  Each item is now the policy name with the required `q` parameter,
+  `"RemoteAddr";q=1;w=60`, as the draft it links to defines it, #1703
 
 ### Misc
 

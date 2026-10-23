@@ -61,7 +61,7 @@ def test_throttle_multiple_specs(
         response.content
     )
     assert response.headers == {
-        'RateLimit-Policy': '1;w=1;name="RemoteAddr", 5;w=60;name="test"',
+        'RateLimit-Policy': '"RemoteAddr";q=1;w=1, "test";q=5;w=60',
         'RateLimit': '"RemoteAddr";r=0;t=1',
         'Content-Type': 'application/json',
     }
